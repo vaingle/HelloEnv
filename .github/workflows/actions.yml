@@ -61,8 +61,13 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Build with Maven
       run: mvn clean package
+
     - name: Sample Deployment
-      run: java -Denvironment.file=dev.properties -jar $(ls target/helloenv-*.jar)
+      run: |
+           java -Denvironment.file=dev.properties -jar $(ls target/helloenv-*.jar)
+      env:
+        DEV_ENVIRONMENT_PROPERTY = ${{ secrets.DEV_ENVIRONMENT_PROPERTY }}
+
 
     # - name: Publish to GitHub Packages
     #   run: mvn deploy
