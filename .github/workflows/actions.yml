@@ -62,10 +62,10 @@ jobs:
     - name: Build with Maven
       run: mvn clean package
       env: 
-        DEV_ENVIRONMENT_PROPERTY: ${{ secrets.DEV_ENVIRONMENT_PROPERTY }}
+        DEV_ENVIRONMENT_VARIABLE: ${{ vars.DEV_ENVIRONMENT_VARIABLE }}
     - name: Sample Deployment
       env: 
-        DEV_ENVIRONMENT_PROPERTY: ${{ secrets.DEV_ENVIRONMENT_PROPERTY }}
+        DEV_ENVIRONMENT_VARIABLE: ${{ vars.DEV_ENVIRONMENT_VARIABLE }}
       run: |
         java -Denvironment.file=dev.properties -jar $(ls target/helloenv-*.jar)
 
