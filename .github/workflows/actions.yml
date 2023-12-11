@@ -2,7 +2,7 @@ name: Create WAR file
 run-name: Build initiated by ${{ github.actor }}
 on:
   pull_request:
-    branches: [ develop ]
+    branches: [ development ]
 jobs:
   build:
     runs-on: ubuntu-latest
