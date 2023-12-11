@@ -60,16 +60,14 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Build with Maven
-      run: mvn clean package
       env: 
         DEV_ENVIRONMENT_VARIABLE: ${{ vars.DEV_ENVIRONMENT_VARIABLE }}
+      run: mvn clean package
     - name: Sample Deployment
       env: 
         DEV_ENVIRONMENT_VARIABLE: ${{ vars.DEV_ENVIRONMENT_VARIABLE }}
       run: |
         java -Denvironment.file=dev.properties -jar $(ls target/helloenv-*.jar)
-
-
 
     # - name: Publish to GitHub Packages
     #   run: mvn deploy
