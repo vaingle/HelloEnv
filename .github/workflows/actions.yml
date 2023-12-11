@@ -63,7 +63,7 @@ jobs:
       run: mvn clean package
     - name: Sample Deployment
       env: 
-        DEV_ENVIRONMENT_PROPERTY: ${{ secrets.DEV_ENVIRONMENT_PROPERTY }}
+        DEV_ENVIRONMENT_PROPERTY: ${{ vars.DEV_ENVIRONMENT_PROPERTY }}
       run: |
         java -Denvironment.file=dev.properties -jar $(ls target/helloenv-*.jar)
 
