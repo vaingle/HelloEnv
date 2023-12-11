@@ -62,9 +62,11 @@ jobs:
     - name: Build with Maven
       run: mvn clean package
     - name: Sample Deployment
-      env: ${{ secrets.DEV_ENVIRONMENT_PROPERTY }}
+      env: 
+        DEV_ENVIRONMENT_PROPERTY: ${{ secrets.DEV_ENVIRONMENT_PROPERTY }}
       run: |
-           java -Denvironment.file=dev.properties -jar $(ls target/helloenv-*.jar)
+        java -Denvironment.file=dev.properties -jar $(ls target/helloenv-*.jar)
+
 
 
     # - name: Publish to GitHub Packages
