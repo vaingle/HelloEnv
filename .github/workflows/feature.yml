@@ -61,7 +61,7 @@ jobs:
     #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Build with Maven
       env: 
-        DEV_ENVIRONMENT_VARIABLE: ${{ secrets.DEV_ENVIRONMENT_VARIABLE }}
+        DEV_ENVIRONMENT_VARIABLE: ${{ vars.DEV_ENVIRONMENT_VARIABLE }}
       run: |
           echo "environment=$DEV_ENVIRONMENT_VARIABLE" > src/main/resources/dev.properties
           mvn clean package
