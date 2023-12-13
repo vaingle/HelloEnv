@@ -1,19 +1,16 @@
 name: Build package on development branch
 run-name: Build initiated by ${{ github.actor }}
 on:
-  push:
-    branches:
-      - development
-  # pull_request:
-  #   types: [closed]
-  #   branches:
-  #     - development
+   pull_request:
+     types: [closed]
+     branches:
+       - development
 permissions:
   contents: read
   packages: write
 jobs:
   build:
-    #if: github.event.pull_request.merged == true && github.base_ref == 'development'
+    if: github.event.pull_request.merged == true && github.base_ref == 'development'
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repository
