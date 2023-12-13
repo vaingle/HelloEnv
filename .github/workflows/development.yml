@@ -64,13 +64,19 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Build with Maven
       env: 
+        UAT_ENVIRONMENT_VARIABLE: ${{ vars.UAT_ENVIRONMENT_VARIABLE }}
+        SIT_ENVIRONMENT_VARIABLE: ${{ vars.SIT_ENVIRONMENT_VARIABLE }}
         DEV_ENVIRONMENT_VARIABLE: ${{ vars.DEV_ENVIRONMENT_VARIABLE }}
       run: |
           echo "environment=$DEV_ENVIRONMENT_VARIABLE" > src/main/resources/dev.properties
+          echo "environment=$SIT_ENVIRONMENT_VARIABLE" > src/main/resources/sit.properties
+          echo "environment=$UAT_ENVIRONMENT_VARIABLE" > src/main/resources/uat.properties
           mvn clean package
     - name: Sample Deployment
       run: |
           java -Denvironment.file=dev.properties -jar $(ls target/helloenv-*.jar)
+          java -Denvironment.file=sit.properties -jar $(ls target/helloenv-*.jar)
+          java -Denvironment.file=uat.properties -jar $(ls target/helloenv-*.jar)
     - name: Publish to GitHub Packages
       run: mvn deploy
       env:
