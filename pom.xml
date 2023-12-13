@@ -7,10 +7,19 @@
     <artifactId>helloenv</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <properties>
-       <maven.compiler.source>1.8</maven.compiler.source>
-       <maven.compiler.target>1.8</maven.compiler.target>
-    </properties>
+      <properties>
+	<maven.compiler.source>17</maven.compiler.source>
+	<maven.compiler.target>17</maven.compiler.target>
+	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+      </properties>
+
+    <distributionManagement>
+      <repository>
+        <id>github</id>
+        <name>GitHub helloapp Apache Maven Packages</name>
+        <url>https://maven.pkg.github.com/${{ github.repository }}</url>
+      </repository>
+    </distributionManagement>
     <build>
         <plugins>
             <plugin>
