@@ -1,16 +1,19 @@
 name: Build package on development branch
 run-name: Build initiated by ${{ github.actor }}
 on:
-  pull_request:
-    types: [closed]
+  push:
     branches:
       - development
+  # pull_request:
+  #   types: [closed]
+  #   branches:
+  #     - development
 permissions:
   contents: read
   packages: write
 jobs:
   build:
-    if: github.event.pull_request.merged == true && github.base_ref == 'development'
+    #if: github.event.pull_request.merged == true && github.base_ref == 'development'
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repository
@@ -25,7 +28,7 @@ jobs:
         cache: 'maven'
         cache-dependency-path: 'pom.xml'
         server-id: github
-        settings-path: ${{ github.workspace }
+        settings-path: ${{ github.workspace }}
     - name: Build with Maven
       env: 
         UAT_ENVIRONMENT_VARIABLE: ${{ vars.UAT_ENVIRONMENT_VARIABLE }}
