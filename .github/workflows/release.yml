@@ -1,0 +1,25 @@
+name: Build package on release branches
+run-name: Build initiated by ${{ github.actor }}
+on:
+  create:
+    branches:
+      - 'release/**'
+  pull_request:
+     types: [closed]
+     branches:
+       - releease/**
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: >
+        (github.ref_type == 'branch' && startsWith(github.ref, 'refs/heads/release/')) || 
+        (github.event_name == 'pull_request' && github.event.pull_request.merged == true && startsWith(github.event.pull_request.base.ref, 'release/'))
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+      - name: Print Working Dir
+        run: |
+            ls -lah
+             
