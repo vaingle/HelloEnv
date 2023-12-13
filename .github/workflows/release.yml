@@ -4,16 +4,13 @@ on:
   create:
     branches:
       - 'release/**'
-  pull_request:
-     types: [closed]
-     branches:
-       - releease/**
+  push:
+    branches:
+      - 'release/**'
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: >
-        (github.ref_type == 'branch' && startsWith(github.ref, 'refs/heads/release/')) || 
-        (github.event_name == 'pull_request' && github.event.pull_request.merged == true && startsWith(github.event.pull_request.base.ref, 'release/'))
+    if: github.ref_type == 'branch' && startsWith(github.ref, 'refs/heads/release/')
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
