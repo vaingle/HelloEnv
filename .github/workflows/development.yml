@@ -78,7 +78,7 @@ jobs:
           java -Denvironment.file=sit.properties -jar $(ls target/helloenv-*.jar)
           java -Denvironment.file=uat.properties -jar $(ls target/helloenv-*.jar)
     - name: Publish to GitHub Packages
-      run: mvn clean deploy -DgithubRepository=${{ github.repository }}
+      run: mvn clean deploy
       env:
         GITHUB_ACTOR: ${{ github.actor }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
