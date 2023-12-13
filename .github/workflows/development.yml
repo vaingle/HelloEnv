@@ -1,16 +1,19 @@
-name: Create WAR file
+name: Build package on development branch
 run-name: Build initiated by ${{ github.actor }}
 on:
   pull_request:
-    branches: [ development ]
+    types: [closed]
+    branches:
+      - development
 jobs:
   build:
+    if: github.event.pull_request.merged == true && github.base_ref == 'development'
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v4
       with:
-        ref: ${{ github.ref }}
+        ref: 'developmement'
     - name: Setup Java 17 and Maven
       uses: actions/setup-java@v4
       with:
@@ -68,10 +71,8 @@ jobs:
     - name: Sample Deployment
       run: |
           java -Denvironment.file=dev.properties -jar $(ls target/helloenv-*.jar)
-
-    # - name: Publish to GitHub Packages
-    #   run: mvn deploy
-    #   working-directory: ./SHINES-main-rewrite
-    #   env:
-    #     GITHUB_ACTOR: ${{ github.actor }}
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Publish to GitHub Packages
+      run: mvn deploy
+      env:
+        GITHUB_ACTOR: ${{ github.actor }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
