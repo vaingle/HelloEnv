@@ -60,6 +60,7 @@ jobs:
     #   env:
     #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Build with Maven
+      working-directory: ${{ github.workspace }}
       env: 
         DEV_ENVIRONMENT_VARIABLE: ${{ vars.DEV_ENVIRONMENT_VARIABLE }}
       run: |
