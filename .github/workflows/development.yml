@@ -42,7 +42,7 @@ jobs:
         echo '        </repository>' >> settings.xml
         echo '        <repository>' >> settings.xml
         echo '          <id>github</id>' >> settings.xml
-        echo '          <url>https://maven.pkg.github.com/${{ github.repository }}</url>' >> settings.xml
+        echo '          <url>https://maven.pkg.github.com/${{ github.repository_owner }}/helloenv</url>' >> settings.xml
         echo '          <snapshots>' >> settings.xml
         echo '            <enabled>true</enabled>' >> settings.xml
         echo '          </snapshots>' >> settings.xml
@@ -78,7 +78,7 @@ jobs:
           java -Denvironment.file=sit.properties -jar $(ls target/helloenv-*.jar)
           java -Denvironment.file=uat.properties -jar $(ls target/helloenv-*.jar)
     - name: Publish to GitHub Packages
-      run: mvn clean deploy
+      run: mvn deploy
       env:
         GITHUB_ACTOR: ${{ github.actor }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
