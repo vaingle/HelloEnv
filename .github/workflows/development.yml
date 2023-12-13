@@ -13,7 +13,7 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v4
       with:
-        ref: 'developmement'
+        ref: 'development'
     - name: Setup Java 17 and Maven
       uses: actions/setup-java@v4
       with:
