@@ -35,7 +35,8 @@ jobs:
         run: |
           xmlstarlet ed --inplace -N x="http://maven.apache.org/POM/4.0.0" \
           -u "/x:project/x:version" \
-          -v ${{ steps.extract_version.outputs.VERSION }} pom.xml
+          -v $VERSION pom.xml
+# -v ${{ steps.extract_version.outputs.VERSION }} pom.xml
       - name: Print Working Dir
         run: |
             cat pom.xml
