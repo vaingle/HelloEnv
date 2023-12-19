@@ -19,8 +19,11 @@ jobs:
       - name: Extract Version from Branch Name
         run: |
           BASE_VERSION=$(echo ${{ github.ref }} | sed -E 's|refs/heads/release/v([0-9]+\.[0-9]+).*|\1|')
+          echo $BASE_VERSION
           COMMIT_COUNT=$(git rev-list --count HEAD)
+          echo $COMMIT_COUNT
           echo "VERSION=$BASE_VERSION.$COMMIT_COUNT" >> $GITHUB_ENV
+          echo $VERSION
           echo "Calculated patch version is $VERSION"
       # - name: Create Release
       #   uses: actions/create-release@v1
