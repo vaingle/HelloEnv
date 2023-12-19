@@ -24,15 +24,12 @@ jobs:
           COMMIT_COUNT=$(git rev-list --count HEAD)
           echo $COMMIT_COUNT
           echo "VERSION=$BASE_VERSION.$COMMIT_COUNT" >> $GITHUB_ENV
-      - name: Print Version
-        run: |
-          echo $VERSION
-      # - name: Create Release
-      #   uses: actions/create-release@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     tag_name: $VERSION
-      #     release_name: Release $VERSION
-      #     draft: false
-      #     prerelease: false
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: $VERSION
+          release_name: Release $VERSION
+          draft: false
+          prerelease: false
