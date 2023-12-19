@@ -69,4 +69,8 @@ jobs:
         env:
           GITHUB_ACTOR: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      
+      - uses: actions/upload-artifact@v2
+        with:
+          name: helloenv
+          path: |
+            /home/runner/work/HelloEnv/HelloEnv/target/*.jar
