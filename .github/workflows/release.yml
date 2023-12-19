@@ -33,6 +33,7 @@ jobs:
           xmlstarlet ed --inplace -N x="http://maven.apache.org/POM/4.0.0" \
           -u "/x:project/x:version" \
           -v $VERSION pom.xml
+          echo pom.xml
       - name: Build with Maven
         env:
           PROD_ENVIRONMENT_VARIABLE: ${{ vars.PROD_ENVIRONMENT_VARIABLE }} 
