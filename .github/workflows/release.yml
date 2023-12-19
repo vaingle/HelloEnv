@@ -40,7 +40,7 @@ jobs:
         run: |
           BASE_VERSION=$(echo ${{ github.ref }} | sed -E 's|refs/heads/release/v([0-9]+\.[0-9]+).*|\1|')
           COMMIT_COUNT=$(git rev-list --count HEAD)
-          VERSION="$BASE_VERSION.$COMMIT_COUNT" >> $GITHUB_ENV
+          echo "VERSION=$BASE_VERSION.$COMMIT_COUNT" >> $GITHUB_ENV
           echo "Calculated patch version is $VERSION"
       - name: Install xmlstarlet
         run: sudo apt-get install -y xmlstarlet
