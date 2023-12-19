@@ -5,7 +5,7 @@ import java.util.Properties;
 public class App {
     public static void main(String[] args) {
         try {
-            String environmentFile = System.getProperty("environment.file", "dev.properties");
+            String environmentFile = System.getProperty("environment.file", "default.properties");
             InputStream is = App.class.getClassLoader().getResourceAsStream(environmentFile);
             Properties props = new Properties();
             props.load(is);

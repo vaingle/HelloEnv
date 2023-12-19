@@ -1,0 +1,34 @@
+name: Create a release when PR is raised to main
+run-name: Build initiated by ${{ github.actor }}
+on:
+  pull_request:
+     branches:
+       - main
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: startsWith(github.head_ref, 'release/')
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+          fetch-depth: '0'
+      - name: Extract Version from Branch Name
+        id: extract_version
+        run: |
+          BASE_VERSION=$(echo ${{ github.ref }} | sed -E 's|refs/heads/release/v([0-9]+\.[0-9]+).*|\1|')
+          COMMIT_COUNT=$(git rev-list --count HEAD)
+          echo "VERSION=$BASE_VERSION.$COMMIT_COUNT" >> $GITHUB_ENV
+          echo "Calculated patch version is $VERSION"
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: $VERSION
+          release_name: Release $VERSION
+          draft: false
+          prerelease: false
