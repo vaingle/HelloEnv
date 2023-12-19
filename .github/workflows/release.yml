@@ -30,13 +30,33 @@ jobs:
         run: sudo apt-get install -y xmlstarlet
       - name: Update pom.xml
         run: |
-          echo $VERSION
-      - name: Update pom.xml
-        run: |
           xmlstarlet ed --inplace -N x="http://maven.apache.org/POM/4.0.0" \
           -u "/x:project/x:version" \
           -v $VERSION pom.xml
-# -v ${{ steps.extract_version.outputs.VERSION }} pom.xml
-      - name: Print Working Dir
+      - name: Build with Maven
+        env:
+          PROD_ENVIRONMENT_VARIABLE: ${{ vars.PROD_ENVIRONMENT_VARIABLE }} 
+          PERF_ENVIRONMENT_VARIABLE: ${{ vars.PERF_ENVIRONMENT_VARIABLE }}
+          UAT_ENVIRONMENT_VARIABLE: ${{ vars.UAT_ENVIRONMENT_VARIABLE }}
+          SIT_ENVIRONMENT_VARIABLE: ${{ vars.SIT_ENVIRONMENT_VARIABLE }}
+          DEV_ENVIRONMENT_VARIABLE: ${{ vars.DEV_ENVIRONMENT_VARIABLE }}
         run: |
-            cat pom.xml
+            echo "environment=$PROD_ENVIRONMENT_VARIABLE" > src/main/resources/prod.properties
+            echo "environment=$PERF_ENVIRONMENT_VARIABLE" > src/main/resources/perf.properties
+            echo "environment=$DEV_ENVIRONMENT_VARIABLE" > src/main/resources/dev.properties
+            echo "environment=$SIT_ENVIRONMENT_VARIABLE" > src/main/resources/sit.properties
+            echo "environment=$UAT_ENVIRONMENT_VARIABLE" > src/main/resources/uat.properties
+            mvn -B package --file pom.xml
+      - name: Sample Deployment
+        run: |
+            java -Denvironment.file=dev.properties -jar $(ls target/helloenv-*.jar)
+            java -Denvironment.file=sit.properties -jar $(ls target/helloenv-*.jar)
+            java -Denvironment.file=uat.properties -jar $(ls target/helloenv-*.jar)
+            java -Denvironment.file=perf.properties -jar $(ls target/helloenv-*.jar)
+            java -Denvironment.file=prod.properties -jar $(ls target/helloenv-*.jar)
+      - name: Publish to GitHub Packages
+        run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
+        env:
+          GITHUB_ACTOR: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
