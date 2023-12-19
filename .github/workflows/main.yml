@@ -25,14 +25,11 @@ jobs:
           echo $COMMIT_COUNT
           echo "VERSION=$BASE_VERSION.$COMMIT_COUNT" >> $GITHUB_ENV
       - name: Create Release
-        #uses: actions/create-release@v1
+        uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VERSION: env.VERSION
-        run: |
-             echo $VERSION
-        # with:
-        #   tag_name: env.VERSION
-        #   release_name: Release env.VERSION
-        #   draft: false
-        #   prerelease: false
+        with:
+          tag_name: ${{ steps.extract_curr_version.outputs.version }}
+          release_name: Release ${{ steps.extract_curr_version.outputs.version }}
+          draft: false
+          prerelease: false
