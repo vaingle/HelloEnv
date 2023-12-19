@@ -26,13 +26,12 @@ jobs:
         id: extract_version
         run: |
           echo "VERSION=$(echo ${{ github.ref }} | sed 's|refs/heads/release/v||')" >> "$GITHUB_ENV"
-          echo "Extracted version is $VERSION"
       - name: Install xmlstarlet
         run: sudo apt-get install -y xmlstarlet
       - name: Update pom.xml
         run: |
           echo $VERSION
-          xmlstarlet edit --inplace --update "/project/version" -value ${{ steps.extract_version.outputs.VERSION }} pom.xml
+          xmlstarlet edit --inplace --update "/project/version" --value $VERSION pom.xml
       - name: Print Working Dir
         run: |
             cat pom.xml
