@@ -18,10 +18,6 @@ jobs:
       - name: Extract Version from Branch Name
         id: extract_version
         run: |
-          echo "VERSION=$(echo ${{ github.ref }} | sed 's|refs/heads/release/v||')" >> "$GITHUB_ENV"
-      - name: Extract Version from Branch Name
-        id: extract_version
-        run: |
           BASE_VERSION=$(echo ${{ github.ref }} | sed -E 's|refs/heads/release/v([0-9]+\.[0-9]+).*|\1|')
           COMMIT_COUNT=$(git rev-list --count HEAD)
           echo "VERSION=$BASE_VERSION.$COMMIT_COUNT" >> $GITHUB_ENV
