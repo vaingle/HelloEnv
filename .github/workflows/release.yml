@@ -38,14 +38,15 @@ jobs:
         id: extract_version
         run: |
           echo "VERSION=$(echo ${{ github.ref }} | sed 's|refs/heads/release/v||')" >> "$GITHUB_ENV"
-      - name: Install xmlstarlet
-        run: sudo apt-get install -y xmlstarlet
-      - name: Update pom.xml
-        run: |
-          xmlstarlet ed --inplace -N x="http://maven.apache.org/POM/4.0.0" \
-          -u "/x:project/x:version" \
-          -v $VERSION pom.xml
-          cat pom.xml
+          mvn -B versions:set -DnewVersion=$VERSION -DgenerateBackupPoms=false
+      # - name: Install xmlstarlet
+      #   run: sudo apt-get install -y xmlstarlet
+      # - name: Update pom.xml
+      #   run: |
+      #     xmlstarlet ed --inplace -N x="http://maven.apache.org/POM/4.0.0" \
+      #     -u "/x:project/x:version" \
+      #     -v $VERSION pom.xml
+      #     cat pom.xml
       - name: Build with Maven
         env:
           PROD_ENVIRONMENT_VARIABLE: ${{ vars.PROD_ENVIRONMENT_VARIABLE }} 
