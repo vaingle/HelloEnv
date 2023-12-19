@@ -42,7 +42,7 @@ jobs:
           echo $BASE_VERSION
           COMMIT_COUNT=$(git rev-list --count HEAD)
           echo $COMMIT_COUNT
-          PATCH_VERSION="$BASE_VERSION.$COMMIT_COUNT)
+          PATCH_VERSION="$BASE_VERSION.$COMMIT_COUNT)"
           echo "Calculated patch version is $PATCH_VERSION"
         #  echo "PATCH_VERSION=$PATCH_VERSION" >> "$GITHUB_ENV"
           
