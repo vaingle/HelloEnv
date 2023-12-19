@@ -24,7 +24,6 @@ jobs:
           COMMIT_COUNT=$(git rev-list --count HEAD)
           echo $COMMIT_COUNT
           echo "VERSION=$BASE_VERSION.$COMMIT_COUNT" >> $GITHUB_ENV
-          echo $VERSION
           echo "Calculated patch version is $VERSION"
       # - name: Create Release
       #   uses: actions/create-release@v1
