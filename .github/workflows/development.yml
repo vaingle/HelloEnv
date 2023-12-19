@@ -1,0 +1,54 @@
+name: Build package on development branch
+run-name: Build initiated by ${{ github.actor }}
+on:
+   pull_request:
+     types: [closed]
+     branches:
+       - development
+permissions:
+  contents: read
+  packages: write
+jobs:
+  build:
+    if: github.event.pull_request.merged == true && github.base_ref == 'development'
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+      with:
+        ref: 'development'
+    - name: Setup Java 17 and Maven
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'oracle'
+        java-version: '17'
+        cache: 'maven'
+        cache-dependency-path: 'pom.xml'
+        server-id: github
+        settings-path: ${{ github.workspace }}
+    - name: Build with Maven
+      env: 
+        UAT_ENVIRONMENT_VARIABLE: ${{ vars.UAT_ENVIRONMENT_VARIABLE }}
+        SIT_ENVIRONMENT_VARIABLE: ${{ vars.SIT_ENVIRONMENT_VARIABLE }}
+        DEV_ENVIRONMENT_VARIABLE: ${{ vars.DEV_ENVIRONMENT_VARIABLE }}
+      run: |
+          echo "environment=$DEV_ENVIRONMENT_VARIABLE" > src/main/resources/dev.properties
+          echo "environment=$SIT_ENVIRONMENT_VARIABLE" > src/main/resources/sit.properties
+          echo "environment=$UAT_ENVIRONMENT_VARIABLE" > src/main/resources/uat.properties
+          mvn -B package --file pom.xml
+    - name: Sample Deployment
+      run: |
+          java -Denvironment.file=dev.properties -jar $(ls target/helloenv-*.jar)
+          java -Denvironment.file=sit.properties -jar $(ls target/helloenv-*.jar)
+          java -Denvironment.file=uat.properties -jar $(ls target/helloenv-*.jar)
+    - name: Publish to GitHub Packages
+      run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
+      env:
+        GITHUB_ACTOR: ${{ github.actor }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - uses: actions/upload-artifact@v2
+      with:
+        name: helloenv
+        path: |
+          /home/runner/work/HelloEnv/HelloEnv/target/*.jar
+  
