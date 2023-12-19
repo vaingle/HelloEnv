@@ -31,7 +31,11 @@ jobs:
       - name: Update pom.xml
         run: |
           echo $VERSION
-          xmlstarlet edit --inplace --update "/project/version" --value $VERSION pom.xml
+      - name: Update pom.xml
+        run: |
+          xmlstarlet ed --inplace -N x="http://maven.apache.org/POM/4.0.0" \
+          -u "/x:project/x:version" \
+          -v ${{ steps.extract_version.outputs.VERSION }} pom.xml
       - name: Print Working Dir
         run: |
             cat pom.xml
