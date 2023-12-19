@@ -25,6 +25,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: ${{ github.ref }}
+          fetch-depth: '0'
       # - name: Setup Java 17 and Maven
       #   uses: actions/setup-java@v4
       #   with:
@@ -37,7 +38,7 @@ jobs:
       - name: Extract Version from Branch Name
         id: extract_version
         run: |
-          echo "BASE_VERSION=$(echo ${{ github.ref }} | sed 's|refs/heads/release/v||')" >> "$GITHUB_ENV"
+          echo "BASE_VERSION=$(echo ${{ github.ref }} | sed 's|refs/heads/release/v||')"
           COMMIT_COUNT=$(git rev-list --count HEAD)
           echo $COMMIT_COUNT
           PATCH_VERSION="${BASE_VERSION}.${COMMIT_COUNT}"
