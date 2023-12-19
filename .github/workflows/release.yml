@@ -4,19 +4,32 @@ on:
   create:
     branches:
       - 'release/**'
-  push:
-    branches:
-      - 'release/**'
+  pull_request:
+     types: [closed]
+     branches:
+       - release/**
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: github.ref_type == 'branch' && startsWith(github.ref, 'refs/heads/release/')
+    if: >
+        (github.ref_type == 'branch' && startsWith(github.ref, 'refs/heads/release/')) || 
+        (github.event_name == 'pull_request' && github.event.pull_request.merged == true && startsWith(github.event.pull_request.base.ref, 'release/'))
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
         with:
           ref: ${{ github.ref }}
+      - name: Extract Version from Branch Name
+        id: extract_version
+        run: |
+          VERSION=$(echo ${{ github.ref }} | sed 's|refs/heads/release/v||')
+          echo "Extracted version is $VERSION"
+          echo "::set-output name=VERSION::$VERSION"
+      - name: Install xmlstarlet
+        run: sudo apt-get install -y xmlstarlet
+      - name: Update pom.xml
+        run: |
+          xmlstarlet ed --inplace -u "/project/version" -v ${{ steps.extract_version.outputs.VERSION }} pom.xml
       - name: Print Working Dir
         run: |
-            ls -lah
-             
+            cat pom.xml
