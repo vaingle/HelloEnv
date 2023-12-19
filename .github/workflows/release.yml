@@ -8,6 +8,9 @@ on:
      types: [closed]
      branches:
        - release/**
+  push:
+    branches:
+      - "release/**"
 jobs:
   build:
     runs-on: ubuntu-latest
