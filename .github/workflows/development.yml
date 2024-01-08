@@ -1,3 +1,4 @@
+# Add a condition that makes sure that a push to origin by the Github Action does not trigger this or any other action. 
 name: Build package on development branch
 run-name: Build initiated by ${{ github.actor }}
 on:
