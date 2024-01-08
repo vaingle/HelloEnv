@@ -1,3 +1,4 @@
+# Add a condition that makes sure that a push to origin by the Github Action does not trigger this or any other action. 
 name: Build package on development branch
 run-name: Build initiated by ${{ github.actor }}
 on:
@@ -10,7 +11,7 @@ permissions:
   packages: write
 jobs:
   build:
-    if: github.event.pull_request.merged == true && github.base_ref == 'development'
+    if: github.event.pull_request.merged == true && github.base_ref == 'development' && github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repository
@@ -26,6 +27,11 @@ jobs:
         cache-dependency-path: 'pom.xml'
         server-id: github
         settings-path: ${{ github.workspace }}
+    - name: Update version in pom.xml
+      uses: actions/mvn-version-bumper@main
+      with:
+        trigger_event: 'pull_request'
+        increment: 'patch'
     - name: Build with Maven
       env: 
         UAT_ENVIRONMENT_VARIABLE: ${{ vars.UAT_ENVIRONMENT_VARIABLE }}

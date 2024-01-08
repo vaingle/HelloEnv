@@ -1,3 +1,4 @@
+# Add a condition that makes sure that a push to origin by the Github Action does not trigger this or any other action. 
 name: Build package on release branches
 run-name: Build initiated by ${{ github.actor }}
 on:
@@ -32,21 +33,21 @@ jobs:
           cache-dependency-path: 'pom.xml'
           server-id: github
           settings-path: ${{ github.workspace }}
-      - name: Extract Version from Branch Name
-        id: extract_version
-        run: |
-          BASE_VERSION=$(echo ${{ github.ref }} | sed -E 's|refs/heads/release/v([0-9]+\.[0-9]+).*|\1|')
-          COMMIT_COUNT=$(git rev-list --count HEAD)
-          echo "VERSION=$BASE_VERSION.$COMMIT_COUNT" >> $GITHUB_ENV
-          echo "Calculated patch version is $VERSION"
-      - name: Install xmlstarlet
-        run: sudo apt-get install -y xmlstarlet
-      - name: Update pom.xml
-        run: |
-          xmlstarlet ed --inplace -N x="http://maven.apache.org/POM/4.0.0" \
-          -u "/x:project/x:version" \
-          -v $VERSION pom.xml
-          cat pom.xml
+      # - name: Extract Version from Branch Name
+      #   id: extract_version
+      #   run: |
+      #     BASE_VERSION=$(echo ${{ github.ref }} | sed -E 's|refs/heads/release/v([0-9]+\.[0-9]+).*|\1|')
+      #     COMMIT_COUNT=$(git rev-list --count HEAD)
+      #     echo "VERSION=$BASE_VERSION.$COMMIT_COUNT" >> $GITHUB_ENV
+      #     echo "Calculated patch version is $VERSION"
+      # - name: Install xmlstarlet
+      #   run: sudo apt-get install -y xmlstarlet
+      # - name: Update pom.xml
+      #   run: |
+      #     xmlstarlet ed --inplace -N x="http://maven.apache.org/POM/4.0.0" \
+      #     -u "/x:project/x:version" \
+      #     -v $VERSION pom.xml
+      #     cat pom.xml
       - name: Build with Maven
         env:
           PROD_ENVIRONMENT_VARIABLE: ${{ vars.PROD_ENVIRONMENT_VARIABLE }} 

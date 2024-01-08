@@ -16,14 +16,15 @@ jobs:
         with:
           ref: ${{ github.ref }}
           fetch-depth: '0'
-      - name: Extract Version from Branch Name
-        id: extract_curr_version
-        run: |
-          BASE_VERSION=$(echo ${{ github.head_ref }} | sed -E 's|release/v([0-9]+\.[0-9]+).*|\1|')
-          echo $BASE_VERSION
-          COMMIT_COUNT=$(git rev-list --count HEAD)
-          echo $COMMIT_COUNT
-          echo "VERSION=$BASE_VERSION.$COMMIT_COUNT" >> $GITHUB_OUTPUT
+# You need to extract the version from pom.xml. Please check the mvn-version-bumper shell script for the mvn command to get the version. 
+      # - name: Extract Version from Branch Name
+      #   id: extract_curr_version
+      #   run: |
+      #     BASE_VERSION=$(echo ${{ github.head_ref }} | sed -E 's|release/v([0-9]+\.[0-9]+).*|\1|')
+      #     echo $BASE_VERSION
+      #     COMMIT_COUNT=$(git rev-list --count HEAD)
+      #     echo $COMMIT_COUNT
+      #     echo "VERSION=$BASE_VERSION.$COMMIT_COUNT" >> $GITHUB_OUTPUT
       - name: Create Release
         uses: actions/create-release@v1
         env:
