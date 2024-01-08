@@ -18,6 +18,11 @@ jobs:
         java-version: '17'
         cache: 'maven'
         cache-dependency-path: 'pom.xml'
+    - name: Update version in pom.xml
+      uses: kalyan-mallajosyula/mvn-version-bumper@main
+      with:
+        trigger_event: 'pull_request'
+        increment: 'patch'
     - name: Build with Maven
       env: 
         DEV_ENVIRONMENT_VARIABLE: ${{ vars.DEV_ENVIRONMENT_VARIABLE }}
