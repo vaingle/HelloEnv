@@ -152,7 +152,7 @@ jobs:
         GITHUB_ACTOR: ${{ github.actor }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Create Pull request
-      needs: [codeql_autobuild_check, build_artifact_for_hotfix_to_main]
+      #needs: [codeql_autobuild_check, build_artifact_for_hotfix_to_main]
       if: github.event.pull.request.base.ref == 'opsmain' && github.event.pull_request.head.ref == 'hotfix/'
       uses: octokit/rest.js@v2
       with:
