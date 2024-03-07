@@ -181,7 +181,7 @@ jobs:
   ##### hotfix merged to main
   build_artifact_for_main:
     if: >
-      github.event.pull_request.merged == true && github.base_ref == 'main' && github.event.pull_request.head.ref == 'opshotfix/'
+      github.event.pull_request.merged == true && github.base_ref == 'main'
     runs-on: ubuntu-latest
     needs: [codeql_autobuild_check]
     steps:
