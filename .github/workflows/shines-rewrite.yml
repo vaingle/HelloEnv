@@ -68,7 +68,7 @@ jobs:
         repository: 'vaingle/mvn-version-bumper'
         ref: 'refs/heads/main'
         #ssh-key: ${{ secrets.DEVOPS_PULL_PRIVATE_KEY }}
-        ssh-key: ${{ secrets.REPOSITORY_TOKEN }}
+        token: ${{ secrets.PAT }}
         #path: 'SHINES-main-rewrite/shines-devops'
         path: mvn-version-bumper
     - name: Setup Java 17 and Maven
@@ -85,7 +85,7 @@ jobs:
       run: |
         echo $TRIGGER_EVENT
         echo $BRANCH_NAME
-        cd SHINES-main-rewrite
+        #cd SHINES-main-rewrite
         chmod +x mvn-version-bumper/mvn_version_bumper.sh
         mvn-version-bumper/mvn_version_bumper.sh $BRANCH_NAME $TRIGGER_EVENT
       env:
