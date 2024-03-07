@@ -86,6 +86,7 @@ jobs:
         echo $TRIGGER_EVENT
         echo $BRANCH_NAME
         #cd SHINES-main-rewrite
+        cd mvn-version-bumper
         chmod +x mvn-version-bumper/mvn_version_bumper.sh
         mvn-version-bumper/mvn_version_bumper.sh $BRANCH_NAME $TRIGGER_EVENT
       env:
