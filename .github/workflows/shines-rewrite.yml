@@ -256,7 +256,7 @@ jobs:
         java-version: '17'
     - name: Publish to GitHub Packages
       run: mvn -B deploy
-      working-directory: SHINES-main-rewrite/
+      working-directory: ${{ github.workspace }}
       env:
         GITHUB_ACTOR: ${{ github.actor }}
         GITHUB_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}
