@@ -12,7 +12,7 @@ on:
     branches:
       - 'opsrelease/**'
       - 'opsdevelopment'
-      - 'opsmain'
+      - 'main'
       - 'opshotfix/**'
 
 permissions:
