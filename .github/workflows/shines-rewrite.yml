@@ -228,24 +228,27 @@ jobs:
       with:
         repository: 'vaingle/mvn-version-bumper'
         ref: 'refs/heads/main'
-        ssh-key: ${{ secrets.DEVOPS_PULL_PRIVATE_KEY }}
-        path: 'SHINES-main-rewrite/shines-devops'
+        token: ${{ secrets.PAT }}
+        #ssh-key: ${{ secrets.DEVOPS_PULL_PRIVATE_KEY }}
+        #path: 'SHINES-main-rewrite/shines-devops'
+        path: mvn-version-bumper
     - name: Setup Java 17 and Maven
       uses: actions/setup-java@v4
       with:
         distribution: 'temurin'
         java-version: '17'
         cache: 'maven'
-        cache-dependency-path: 'SHINES-main-rewrite/pom.xml'
+        #cache-dependency-path: 'SHINES-main-rewrite/pom.xml'
+        cache-dependency-path: 'pom.xml'
         server-id: github
         settings-path: ${{ github.workspace }}
     - name: Run custom script
       run: |
         echo $TRIGGER_EVENT
         echo $BRANCH_NAME
-        cd SHINES-main-rewrite
-        chmod +x shines-devops/mvn_version_bumper.sh
-        shines-devops/mvn_version_bumper.sh $BRANCH_NAME $TRIGGER_EVENT
+
+        chmod +x mvn-version-bumper/versioning.sh
+        mvn-version-bumper/versioning.sh $BRANCH_NAME $TRIGGER_EVENT
       env:
         TRIGGER_EVENT: ${{ github.event_name }}
         BRANCH_NAME: ${{ github.ref_name }}
