@@ -67,7 +67,8 @@ jobs:
       with:
         repository: 'vaingle/mvn-version-bumper'
         ref: 'refs/heads/main'
-        ssh-key: ${{ secrets.DEVOPS_PULL_PRIVATE_KEY }}
+        #ssh-key: ${{ secrets.DEVOPS_PULL_PRIVATE_KEY }}
+        ssh-key: ${{ secrets.REPOSITORY_TOKEN }}
         path: 'SHINES-main-rewrite/shines-devops'
     - name: Setup Java 17 and Maven
       uses: actions/setup-java@v4
@@ -88,7 +89,7 @@ jobs:
       env:
         TRIGGER_EVENT: ${{ github.event_name }}
         BRANCH_NAME: ${{ github.ref_name }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}
     - uses: actions/setup-java@v4
       with:
         distribution: 'temurin'
@@ -98,7 +99,7 @@ jobs:
       working-directory: SHINES-main-rewrite/
       env:
         GITHUB_ACTOR: ${{ github.actor }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}
 
 ######### hotfix 
 
@@ -140,7 +141,7 @@ jobs:
       env:
         TRIGGER_EVENT: ${{ github.event_name }}
         BRANCH_NAME: ${{ github.ref_name }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}
     - uses: actions/setup-java@v4
       with:
         distribution: 'temurin'
@@ -150,13 +151,13 @@ jobs:
       working-directory: SHINES-main-rewrite/
       env:
         GITHUB_ACTOR: ${{ github.actor }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}
     - name: Create Pull request
       #needs: [codeql_autobuild_check, build_artifact_for_hotfix_to_main]
       if: github.event.pull.request.base.ref == 'opsmain' && github.event.pull_request.head.ref == 'hotfix/'
       uses: octokit/rest.js@v2
       with:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}
         method: post
         url: /repos/${{ github.repository }}/pulls
         title: 'Automates PR from release into development'
@@ -242,7 +243,7 @@ jobs:
       env:
         TRIGGER_EVENT: ${{ github.event_name }}
         BRANCH_NAME: ${{ github.ref_name }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}
     - uses: actions/setup-java@v4
       with:
         distribution: 'temurin'
@@ -252,4 +253,4 @@ jobs:
       working-directory: SHINES-main-rewrite/
       env:
         GITHUB_ACTOR: ${{ github.actor }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}
