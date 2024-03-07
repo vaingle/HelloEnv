@@ -18,7 +18,7 @@
       <repository>
         <id>github</id>
         <name>GitHub helloenv Apache Maven Packages</name>
-        <url>https://maven.pkg.github.com/kalyan-mallajosyula/helloenv</url>
+        <url>https://maven.pkg.github.com/vaingle/helloenv</url>
       </repository>
     </distributionManagement>
 
