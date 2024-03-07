@@ -180,7 +180,7 @@ jobs:
 
   create_pr:
      runs-on: ubuntu-latest
-     needs: [codeql_autobuild_check ] #, build_artifact_for_hotfix_to_main]
+     needs: [codeql_autobuild_check, build_artifact_for_rel ]
      if: github.event.pull.request.base.ref == 'opsdevelopment' && github.event.pull_request.head.ref == 'opsrelease/'
      steps: 
       - name: Checkout code
