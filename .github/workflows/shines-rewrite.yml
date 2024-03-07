@@ -65,7 +65,7 @@ jobs:
     - name: Checkout external repository with script
       uses: actions/checkout@v4
       with:
-        repository: 'gadhs-shines/shines-devops'
+        repository: 'vaingle/mvn-version-bumper'
         ref: 'refs/heads/main'
         ssh-key: ${{ secrets.DEVOPS_PULL_PRIVATE_KEY }}
         path: 'SHINES-main-rewrite/shines-devops'
@@ -117,7 +117,7 @@ jobs:
     - name: Checkout external repository with script
       uses: actions/checkout@v4
       with:
-        repository: 'gadhs-shines/shines-devops'
+        repository: 'vaingle/mvn-version-bumper'
         ref: 'refs/heads/main'
         ssh-key: ${{ secrets.DEVOPS_PULL_PRIVATE_KEY }}
         path: 'SHINES-main-rewrite/shines-devops'
@@ -219,7 +219,7 @@ jobs:
     - name: Checkout external repository with script
       uses: actions/checkout@v4
       with:
-        repository: 'gadhs-shines/shines-devops'
+        repository: 'vaingle/mvn-version-bumper'
         ref: 'refs/heads/main'
         ssh-key: ${{ secrets.DEVOPS_PULL_PRIVATE_KEY }}
         path: 'SHINES-main-rewrite/shines-devops'
