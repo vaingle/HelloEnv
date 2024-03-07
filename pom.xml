@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.uthinkurbetterthanme</groupId>
     <artifactId>helloenv</artifactId>
-    <version>opsv4.0.0</version>
+    <version>vopsv4.0.0</version>
     <packaging>jar</packaging>
 
     <properties>
