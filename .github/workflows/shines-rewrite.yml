@@ -165,8 +165,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}
     - name: Create Pull request
       #needs: [codeql_autobuild_check, build_artifact_for_hotfix_to_main]
+      uses: octokit/rest.js@v17
       if: github.event.pull.request.base.ref == 'opsmain' && github.event.pull_request.head.ref == 'opshotfix/'
-      uses: octokit/rest.js@v20
       with:
         GITHUB_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}
         method: post
@@ -203,7 +203,7 @@ jobs:
 
       - name: Create Pull request
         if: steps.check_commits.outcome == 'success'
-        uses: octokit/rest.js@v20
+        uses: octokit/rest.js@v17
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           method: post
