@@ -246,8 +246,7 @@ jobs:
       run: |
         echo $TRIGGER_EVENT
         echo $BRANCH_NAME
-        #cd SHINES-main-rewrite
-        #cd ${{ github.workspace }}/mvn-version-bumper
+
         chmod +x mvn-version-bumper/versioning.sh
         mvn-version-bumper/versioning.sh $BRANCH_NAME $TRIGGER_EVENT
       env:
