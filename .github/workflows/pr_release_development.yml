@@ -34,7 +34,7 @@ jobs:
     - name: check for new commits
       id: check_commits
       run: |
-        commit_range="${{ steps.commit.rage.outputs.range }}"
+        commit_range="${{ steps.commit_range.outputs.range }}"
         if [ -z "$commit_range" ]; then
           echo "No new commits. Exiting"
           exit 0
