@@ -26,8 +26,8 @@ jobs:
      - name: prompt for title and body
        id: prompt
        run: |
-        echo ":: set-output name=title::$(echo -n "pull request title:" ; read -r title && echo "$title" )"
-        echo ":: set-output name=body::$(echo -n "pull request body:" ; read -r body && echo "$body" )"
+        echo ":: set-output name=title::$(echo -n "pull request title:" ; autopr )"
+        echo ":: set-output name=body::$(echo -n "pull request body:" ; automated pull request )"
          
      - name: Raise PR
        env:
