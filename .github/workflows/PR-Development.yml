@@ -25,9 +25,9 @@ jobs:
         uses: google/go-github15@v2
         with:
           name: GitHub Actions
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PAT }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}
         run: |
           echo "::group:: Creating pull request"
           gh pr create -B opsdevelopment -H ${{ github.ref }} --title=" ${{ steps.extract-version.outputs.VERSION }} release to opsdevelopment"
