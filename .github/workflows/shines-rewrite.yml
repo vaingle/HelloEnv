@@ -232,6 +232,11 @@ jobs:
       env:
         GITHUB_ACTOR: ${{ github.actor }}
         GITHUB_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+      with:
+          ref: "refs/heads/opshotfix"
+          fetch-depth: '0'    
     - name: Create Pull request
       uses: peter-evans/create-pull-request@v3
       with:
