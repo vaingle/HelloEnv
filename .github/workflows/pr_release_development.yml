@@ -13,11 +13,11 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Check for new commits
-      id: check_commits
-      run: | 
-        commits=$(git rev-list --count HEAD..origin/${GITHUB_REF})
-        echo "::set-output name=commits::${commits}"
+   # - name: Check for new commits
+    #  id: check_commits
+     # run: | 
+      #  commits=$(git rev-list --count HEAD..origin/${GITHUB_REF})
+      #  echo "::set-output name=commits::${commits}"
         #if [[ $(git log --preety=format:%H HEAD..origin/$GITHUB_REF) ]]; then
         #  echo "::set-output name=changes::true"
         #else
@@ -27,8 +27,21 @@ jobs:
       #env:
       #  GITHUB_REF: ${{github.ref}}
 
+    - name: get commit range
+      id: commit_range
+      run: echo "::set-output name=range::$(git rev-parse ${{ github.event.before }}..$(git rev-parse ${{ github.sha }})"
+
+    - name: check for new commits
+      id: check_commits
+      run: |
+        commit_range="${{ steps.commit.rage.outputs.range }}"
+        if [ -z "$commit_range" ]; then
+          echo "No new commits. Exiting"
+          exit 0
+        fi
+
     - name: create PR
-      if: steps.check_commits.outputs.commits > 0
+      if: steps.check_commits.outcome == 'success'
       uses: peter-evans/create-pull-request@v3
       with:
         token: ${{ secrets.PAT }}
