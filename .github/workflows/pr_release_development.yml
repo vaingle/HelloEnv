@@ -16,21 +16,22 @@ jobs:
     - name: Check for new commits
       id: check_commits
       run: | 
-        if [[ $(git log --preety=format:%H HEAD..origin/$GITHUB_REF) ]]; then
-          echo "::set-output name=changes::true"
-        else
-          echo "::set-output name=changes::false"
-        fi
+        commits=$(git rev-list --count HEAD..origin/${GITHUB_REF})
+        echo "::set-output name=commits::${commits}"
+        #if [[ $(git log --preety=format:%H HEAD..origin/$GITHUB_REF) ]]; then
+        #  echo "::set-output name=changes::true"
+        #else
+        #  echo "::set-output name=changes::false"
+        #fi
 
-      env:
-        GITHUB_REF: ${{github.ref}}
+      #env:
+      #  GITHUB_REF: ${{github.ref}}
 
     - name: create PR
-      if: steps.check_commits.outputs.changes == 'true'
+      if: steps.check_commits.outputs.commits > 0
       uses: peter-evans/create-pull-request@v3
       with:
         token: ${{ secrets.PAT }}
         base: opsdevelopment
         title: "Merge opsrelease into development"
         body: "This is auto PR"
-
