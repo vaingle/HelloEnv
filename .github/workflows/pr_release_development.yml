@@ -41,12 +41,14 @@ jobs:
     #    fi
 
     - name: create PR
+      run: |
+        git push origin HEAD:refs/heads/opsdevelopment
      # if: steps.check_commits.outcome == 'success'
-      uses: peter-evans/create-pull-request@v3
-      with:
-        token: ${{ secrets.PAT }}
-        #base: opsdevelopment
-        commit-message: "Merge changes from release to development"
-        title: "Merge opsrelease into development"
-        body: "This is auto PR"
-        branch: opsdevelopment
+     # uses: peter-evans/create-pull-request@v3
+     # with:
+     #   token: ${{ secrets.PAT }}
+     #   #base: opsdevelopment
+     #   commit-message: "Merge changes from release to development"
+     #   title: "Merge opsrelease into development"
+     #   body: "This is auto PR"
+     #   branch: opsdevelopment
