@@ -235,10 +235,12 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v4
       with:
-          ref: "refs/heads/opshotfix"
+          ref: ${{ github.ref }}
           fetch-depth: '0'    
     - name: Create Pull request
       uses: peter-evans/create-pull-request@v3
+      env:  
+        GITHUB_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}      
       with:
         token: ${{ secrets.PAT }}
         title: 'Merge opshotfix into opsdevelopment'
