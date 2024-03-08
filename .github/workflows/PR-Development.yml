@@ -25,9 +25,12 @@ jobs:
 
      - name: prompt for title and body
        id: prompt
+       env:
+         title: "autopr"
+         body: "automated pull request"
        run: |
-        echo ":: set-output name=title::$(echo -n "pull request title:" ; autopr )"
-        echo ":: set-output name=body::$(echo -n "pull request body:" ; automated pull request )"
+        echo ":: set-output name=title::$(echo -n "pull request title:" ; $title )"
+        echo ":: set-output name=body::$(echo -n "pull request body:" ; $body )"
          
      - name: Raise PR
        env:
