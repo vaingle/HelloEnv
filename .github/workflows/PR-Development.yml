@@ -23,20 +23,20 @@ jobs:
        with:
          node-version: '14'
 
-     - name: prompt for title and body
-       id: prompt
-       env:
-         title: "autopr"
-         body: "automated pull request"
-       run: |
-        echo ":: set-output name=title::$(echo -n "pull request title:" ; $title )"
-        echo ":: set-output name=body::$(echo -n "pull request body:" ; $body )"
+     #- name: prompt for title and body
+       #id: prompt
+       #env:
+       #  title: "autopr"
+       #  body: "automated pull request"
+       #run: |
+       # echo ":: set-output name=title::$(echo -n "pull request title:" ; $title )"
+       # echo ":: set-output name=body::$(echo -n "pull request body:" ; $body )"
          
      - name: Raise PR
        env:
          GH_TOKEN: ${{ github.token }}     
        run: |
-         gh pr create --base opsdevelopment --head ${{ github.ref }} --title "${{ steps.prompt.outputs.title }}" --body "${{ steps.prompt.outputs.body }}"
+         gh pr create --base opsdevelopment --head ${{ github.ref }} --title "auto pr" --body "This is auto pr"
        #uses: peter-evans/create-pull-request@v3
        #with: 
         #branch: "opsdevelopment"
