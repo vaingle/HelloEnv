@@ -242,8 +242,8 @@ jobs:
       #if: startsWith(github.base_ref, 'opshotfix/')
       uses: actions/checkout@v4
       with:
-          ref: "opshotfix/"
-          fetch-depth: '0'    
+          ref: "opshotfix/**"
+          #fetch-depth: '0'    
     - name: Create Pull request
       uses: peter-evans/create-pull-request@v3
       env:  
@@ -255,7 +255,7 @@ jobs:
           This is pull request merges changes from the opshotfix branch into the opsdevelopment branch"
         labels: "automerge"
         branch: "opsdevelopment"
-        base: "opshotfix/"
+        base: "opshotfix/**"
         
 
 
