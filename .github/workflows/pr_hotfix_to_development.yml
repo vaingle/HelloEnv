@@ -1,7 +1,7 @@
 name: Create a PR from hotfix to development
 run-name: Build initiated by ${{ github.actor }}
 on:
-  pull_request:
+  push:
      branches:
        - opshotfix/*
 permissions:
