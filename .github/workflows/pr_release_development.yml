@@ -1,0 +1,38 @@
+name: Create a PR release branch into development
+run-name: Build initiated by ${{ github.actor }}
+on:
+  push:
+     branches:
+       - opshotfix/**
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: startsWith(github.head_ref, 'release/')
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+          fetch-depth: '0'
+      - name: Extract Version from Branch Name
+        id: extract_curr_version
+        run: |
+          BASE_VERSION=$(echo ${{ github.head_ref }} | sed -E 's|release/v([0-9]+\.[0-9]+).*|\1|')
+          echo $BASE_VERSION
+          COMMIT_COUNT=$(git rev-list --count HEAD)
+          echo $COMMIT_COUNT
+          echo "VERSION=$BASE_VERSION.$COMMIT_COUNT" >> $GITHUB_OUTPUT
+      - name: Create Pull request
+        uses: peter-evans/create-pull-request@v3
+        env:  
+          GITHUB_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}      
+        with:
+          token: ${{ secrets.PAT }}
+          title: 'Merge opshotfix into opsdevelopment'
+          body: |
+              This is pull request merges changes from the opshotfix branch into the opsdevelopment branch"
+          labels: "automerge"
+          branch: "opsdevelopment"
+          base: "opshotfix"
