@@ -29,3 +29,4 @@ jobs:
         body:
           This is auto pr
         token: ${{ secrets.PAT }}
+        GITHUB_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}
