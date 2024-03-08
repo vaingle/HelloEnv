@@ -1,0 +1,36 @@
+name: Create a PR release branch into development
+run-name: Build initiated by ${{ github.actor }}
+on:
+  push:
+     branches:
+       - opsrelease/**
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Check for new commits
+      id: check_commits
+      run: | 
+        if [[ $ git log --preety=format:%H HEAD..origin/$GITHUB_REF) ]]; then
+          echo "::set-output name=changes::true"
+        else
+          echo "::set-output name=changes::false"
+        fi
+
+      env:
+        GITHUB_REF: ${{github.ref}
+
+    - name: create PR
+      if: steps.check_commits.outputs.changes == 'true'
+      uses: peter-evans/create-pull-request@v3
+      with:
+        token: ${{ secrets.PAT }}
+        base: opsdevelopment
+        title: "Merge opsrelease into development"
+        body: "This is auto PR"
+
