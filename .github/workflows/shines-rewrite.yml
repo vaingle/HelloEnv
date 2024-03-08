@@ -232,6 +232,19 @@ jobs:
       env:
         GITHUB_ACTOR: ${{ github.actor }}
         GITHUB_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}
+    - name: Create Pull request
+      uses: peter-evans/create-pull-request@v3
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        method: post
+        url: /repos/${{ github.repository }}/pulls
+        title: 'Merge opshotfix into opsdevelopment'
+        body: |
+          This is pull request merges changes from the opshotfix branch into the opsdevelopment branch"
+        labels: "automerge"
+        branch: "opsdevelopment"
+        base: "opshotfix/"
+        
 
 
   ########## jj
