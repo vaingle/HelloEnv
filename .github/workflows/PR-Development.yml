@@ -23,7 +23,7 @@ jobs:
        with:
          node-version: '14'
 
-     - name: prompt for title and body
+     #- name: prompt for title and body
        #id: prompt
        #env:
        #  title: "autopr"
