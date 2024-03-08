@@ -1,0 +1,50 @@
+name: Create Pull Request to Development
+run-name: Build initiated by ${{ github.actor }}
+on:
+  push:
+    branches:
+      - 'opsrelease/**'
+ 
+jobs:
+  create-pull-request:
+    runs-on: ubuntu-latest
+    steps:
+     - name: chckout code
+       uses: actions/checkout@v2
+
+     #- name: extract git commit data
+     #  uses: rlespinasse/git-commit-data-action@v1.x
+
+     #- name: update author information
+     #  uses: echo ${{env.GIT_COMMIT_AUTHOR_NAME}} >> AUTHOR
+
+     - name: Setup github cli
+       uses: actions/setup-node@v2
+       with:
+         node-version: '14'
+
+     #- name: prompt for title and body
+       #id: prompt
+       #env:
+       #  title: "autopr"
+       #  body: "automated pull request"
+       #run: |
+       # echo ":: set-output name=title::$(echo -n "pull request title:" ; $title )"
+       # echo ":: set-output name=body::$(echo -n "pull request body:" ; $body )"
+         
+     - name: Raise PR
+       env:
+         GH_TOKEN: ${{ github.token }}
+       run: |
+         gh pr create --base opsdevelopment --head ${{ github.ref }} --title "auto pr" --body "This is auto pr"
+       #uses: peter-evans/create-pull-request@v3
+       #with: 
+        #branch: "opsdevelopment"
+       # base: "opsrelease/**"
+        #committer: ${{ env.GIT_COMMIT_AUTHOR_NAME }} < ${{ env.GIT_COMMIT_AUTHOR_EMAIL }}
+        #author: ${{ env.GIT_COMMIT_AUTHOR_NAME }} < ${{ env.GIT_COMMIT_AUTHOR_EMAIL }}
+        #title: "auto pr"
+        #body:
+         # This is auto pr
+        #token: ${{ secrets.PAT }}
+        #GITHUB_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}

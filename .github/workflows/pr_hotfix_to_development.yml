@@ -3,8 +3,7 @@ run-name: Build initiated by ${{ github.actor }}
 on:
   push:
     branches:
-      - 'opshotfix*'
- 
+      - 'opshotfix*' 
 jobs:
   create-pull-request:
     runs-on: ubuntu-latest
