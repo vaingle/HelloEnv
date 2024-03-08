@@ -23,7 +23,7 @@ jobs:
         fi
 
       env:
-        GITHUB_REF: ${{github.ref}
+        GITHUB_REF: ${{github.ref}}
 
     - name: create PR
       if: steps.check_commits.outputs.changes == 'true'
