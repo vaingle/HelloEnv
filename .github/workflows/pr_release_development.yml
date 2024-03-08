@@ -45,6 +45,8 @@ jobs:
       uses: peter-evans/create-pull-request@v3
       with:
         token: ${{ secrets.PAT }}
-        base: opsdevelopment
+        #base: opsdevelopment
+        commit-message: "Merge changes from release to development"
         title: "Merge opsrelease into development"
         body: "This is auto PR"
+        branch: opsdevelopment
