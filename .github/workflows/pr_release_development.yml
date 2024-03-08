@@ -16,7 +16,7 @@ jobs:
     - name: Check for new commits
       id: check_commits
       run: | 
-        if [[ $ git log --preety=format:%H HEAD..origin/$GITHUB_REF) ]]; then
+        if [[ $(git log --preety=format:%H HEAD..origin/$GITHUB_REF) ]]; then
           echo "::set-output name=changes::true"
         else
           echo "::set-output name=changes::false"
