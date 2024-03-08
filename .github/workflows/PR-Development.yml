@@ -1,0 +1,34 @@
+name: Create Pull Request to Development
+ 
+on:
+  push:
+    branches:
+      - 'opsrelease/**'
+ 
+jobs:
+  create-pull-request:
+    runs-on: ubuntu-latest
+ 
+    steps:
+      - uses: actions/checkout@v3
+ 
+      - name: Extract release version from branch name
+        run: |
+          release_version="${GITHUB_REF##*/}"
+          echo "::set-output name=VERSION::$release_version"
+ 
+      - name: Generate pull request title (optional)
+        run: |
+          echo "Release ${{ steps.extract-version.outputs.VERSION }}" > pull_request_title.txt
+ 
+      - name: Create pull request using gh cli
+        uses: google/go-github15@v2
+        with:
+          name: GitHub Actions
+          token: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "::group:: Creating pull request"
+          gh pr create -B opsdevelopment -H ${{ github.ref }} --title=" ${{ steps.extract-version.outputs.VERSION }} release to opsdevelopment"
+          echo "::endgroup::"
