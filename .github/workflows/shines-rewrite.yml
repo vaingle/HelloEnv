@@ -235,9 +235,7 @@ jobs:
     - name: Create Pull request
       uses: peter-evans/create-pull-request@v3
       with:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        method: post
-        url: /repos/${{ github.repository }}/pulls
+        token: ${{ secrets.PAT }}
         title: 'Merge opshotfix into opsdevelopment'
         body: |
           This is pull request merges changes from the opshotfix branch into the opsdevelopment branch"
