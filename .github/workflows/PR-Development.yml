@@ -12,21 +12,28 @@ jobs:
      - name: chckout code
        uses: actions/checkout@v2
 
-     - name: extract git commit data
-       uses: rlespinasse/git-commit-data-action@v1.x
+     #- name: extract git commit data
+     #  uses: rlespinasse/git-commit-data-action@v1.x
 
-    # - name: update author information
-    #   uses: echo ${{env.GIT_COMMIT_AUTHOR_NAME}} >> AUTHOR
+     #- name: update author information
+     #  uses: echo ${{env.GIT_COMMIT_AUTHOR_NAME}} >> AUTHOR
 
+     - name: Setup github cli
+       uses: actions/setup-node@v2
+       with:
+         node-version: '14'
+         
      - name: Raise PR
-       uses: peter-evans/create-pull-request@v3
-       with: 
-        branch: "opsdevelopment"
-        #base: "opsrelease/**"
+       run: |
+         gh pr create --base opsdevelopment --head ${{ github.ref }}
+       #uses: peter-evans/create-pull-request@v3
+       #with: 
+        #branch: "opsdevelopment"
+       # base: "opsrelease/**"
         #committer: ${{ env.GIT_COMMIT_AUTHOR_NAME }} < ${{ env.GIT_COMMIT_AUTHOR_EMAIL }}
         #author: ${{ env.GIT_COMMIT_AUTHOR_NAME }} < ${{ env.GIT_COMMIT_AUTHOR_EMAIL }}
-        title: "auto pr"
-        body:
-          This is auto pr
-        token: ${{ secrets.PAT }}
-        GITHUB_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}
+        #title: "auto pr"
+        #body:
+         # This is auto pr
+        #token: ${{ secrets.PAT }}
+        #GITHUB_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}
