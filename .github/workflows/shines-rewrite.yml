@@ -215,7 +215,7 @@ jobs:
       run: |
         echo $TRIGGER_EVENT
         echo $BRANCH_NAME
-        echo $GITHUB_HEAD_REF
+        echo $HEAD_BRANCH_NAME
         #cd SHINES-main-rewrite
         #chmod +x shines-devops/mvn_version_bumper.sh
         #shines-devops/mvn_version_bumper.sh $BRANCH_NAME $TRIGGER_EVENT
@@ -225,7 +225,7 @@ jobs:
         TRIGGER_EVENT: ${{ github.event_name }}
         BRANCH_NAME: ${{ github.ref_name }}
         GITHUB_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}
-        #HEAD_BRANCH_NAME: ${{ GITHUB_HEAD_REF }}
+        HEAD_BRANCH_NAME: ${{ github.head.ref }}
     - uses: actions/setup-java@v4
       with:
         distribution: 'temurin'
