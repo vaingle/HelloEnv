@@ -248,6 +248,9 @@ jobs:
          echo $GITHUB_OUTPUT
          cat $GITHUB_OUTPUT
       id: extract_branch
+
+    - name: Checkout external repository with script
+      uses: actions/checkout@v2  
       
     - name: raise PR
       env:
@@ -255,7 +258,7 @@ jobs:
         token: ${{ secrets.PAT }}
         GITHUB_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}
       run: |
-         gh pr create --base opsdevelopment --head ${{ GITHUB_REF }} --title "auto pr from opshotfix to opsdevelopment" --body "This is auto pr from opshotfix to opsdevelopment"
+         gh pr create --base opsdevelopment --head ${{ steps.extract_branch.outputs.branch }} --title "auto pr from opshotfix to opsdevelopment" --body "This is auto pr from opshotfix to opsdevelopment"
         
       
 
