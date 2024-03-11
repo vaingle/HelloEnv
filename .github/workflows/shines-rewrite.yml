@@ -241,15 +241,15 @@ jobs:
     needs: [codeql_autobuild_check] #, build_artifact_for_main]
     steps:
     - name: chckout code from hotfix
-      #if: startsWith(github.ref, 'refs/heads/opshotfix1/'))
+      if: startsWith(github.ref, 'refs/heads/opshotfix1/'))
       uses: actions/checkout@v2
       with:
-        ref: "refs/heads/opshotfix1"
+        ref: "${github.ref}"
         fetch-depth: '0'
 
-    - name: extract branch name
+    #- name: extract branch name
       #if: startsWith(github.ref, 'refs/heads/opshotfix/'))
-      run: echo "::set-env name=HOTFIX_BRANCH::$(echo ${GITHUB_REF#refs/heads/opshotfix1/})"
+    #  run: echo "::set-env name=HOTFIX_BRANCH::$(echo ${GITHUB_REF#refs/heads/opshotfix1/})"
 
     - name: Setup github cli
       uses: actions/setup-node@v2
