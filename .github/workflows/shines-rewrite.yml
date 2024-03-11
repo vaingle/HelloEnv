@@ -248,11 +248,11 @@ jobs:
          #echo $branch_name
          #echo $GITHUB_OUTPUT
          #cat $GITHUB_OUTPUT
-      id: extract_branch
+      id: extract_branch 
       
     - name: raise PR
       run: |
-         gh pr create --base opsdevelopment --head ${{ steps.extract_branch.outputs.branch_name }} --title "auto pr from opshotfix to opsdevelopment" --body "This is auto pr from opshotfix to opsdevelopment"
+         gh pr create --base opsdevelopment --head ${{ steps.extract_branch.outputs.branch }} --title "auto pr from opshotfix to opsdevelopment" --body "This is auto pr from opshotfix to opsdevelopment"
       env:
         GH_TOKEN: ${{ github.token }}
         token: ${{ secrets.PAT }}
