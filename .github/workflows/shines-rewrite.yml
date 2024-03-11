@@ -233,7 +233,6 @@ jobs:
         GITHUB_ACTOR: ${{ github.actor }}
         GITHUB_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}
 
- 
   create_pr_opshotfix_opsdevelopment:
     if: >
       (github.ref_type == 'branch' && startsWith(github.ref, 'refs/heads/opshotfix/')) || 
