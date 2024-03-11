@@ -224,7 +224,7 @@ jobs:
         TRIGGER_EVENT: ${{ github.event_name }}
         BRANCH_NAME: ${{ github.ref_name }}
         GITHUB_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}
-        HEAD_BRANCH_NAME: ${{ github.GITHUB_HEAD_REF }}
+        HEAD_BRANCH_NAME: ${{ GITHUB_HEAD_REF }}
     - uses: actions/setup-java@v4
       with:
         distribution: 'temurin'
