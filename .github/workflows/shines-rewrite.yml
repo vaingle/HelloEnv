@@ -213,7 +213,9 @@ jobs:
       shell: bash
       run: |
          echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+         echo $branch
          echo $GITHUB_OUTPUT
+         cat $GITHUB_OUTPUT
       id: extract_branch
       
     #- name: print head branch name
