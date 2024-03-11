@@ -246,6 +246,10 @@ jobs:
         ref: "refs/heads/opshotfix*"
         fetch-depth: '0'
 
+    - name: extract branch name
+      if: startsWith(github.ref, 'refs/heads/opshotfix/'))
+      run: echo "::set-env name="HOTFIX_BRANCH::$(echo ${GITHUB_REF#refs/heads/hotfix/})"
+
     - name: Setup github cli
       uses: actions/setup-node@v2
       with:
@@ -255,7 +259,7 @@ jobs:
       env:
         GH_TOKEN: ${{ github.token }}
       run: |
-         gh pr create --base opsdevelopment --head opshotfix${{ github_ref#refs/heads/hotfix/ }} --title "auto pr from opshotfix to main" --body "This is auto pr from opshotfix to main"
+         gh pr create --base opsdevelopment --head opshotfix${{ env.HOTFIX_BRANCH }} --title "auto pr from opshotfix to main" --body "This is auto pr from opshotfix to main"
 
   build_artifact_for_rel:
     if: >
