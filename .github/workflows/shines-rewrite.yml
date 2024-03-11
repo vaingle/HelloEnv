@@ -246,6 +246,14 @@ jobs:
         GITHUB_ACTOR: ${{ github.actor }}
         GITHUB_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}
 
+    - name: raise PR
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+         gh pr create --base opsdevelopment --head step.extract_branch.outputs.stdout --title "auto pr from opshotfix to main" --body "This is auto pr from opshotfix to main"
+        
+      
+
   create_pr_opshotfix_opsdevelopment:
     #if: >
     # (github.ref_type == 'branch' && startsWith(github.ref, 'refs/heads/opshotfix1/'))
