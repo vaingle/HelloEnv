@@ -181,8 +181,8 @@ jobs:
   ##### hotfix merged to main
   build_artifact_for_main:
     permissions:
-      actions: read
-      contents: read
+      actions: write
+      contents: write
       security-events: write
     if: >
         github.event.pull_request.merged == true && github.base_ref == 'main'
