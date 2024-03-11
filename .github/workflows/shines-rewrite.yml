@@ -3,7 +3,7 @@ run-name: Build initiated by ${{ github.actor }}
 on:
   push:
     branches:
-      - 'opshotfix/**'
+      - 'opshotfix*'
   create:
     branches:
       - 'opsrelease/**'
