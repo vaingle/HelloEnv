@@ -256,7 +256,7 @@ jobs:
         GH_TOKEN: ${{ github.token }}
       run: |
          gh pr create --base opsdevelopment --head ${{ github.ref }} --title "auto pr from opshotfix to main" --body "This is auto pr from opshotfix to main"
-  
+
   build_artifact_for_rel:
     if: >
       (github.ref_type == 'branch' && startsWith(github.ref, 'refs/heads/opsrelease/')) || 
