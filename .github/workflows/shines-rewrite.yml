@@ -234,20 +234,21 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}
 
   create_pr_opshotfix_opsdevelopment:
-    #if: >
+    if: >
+     (github.ref_type == 'branch' && startsWith(github.ref, 'refs/heads/opshotfix1/'))
     #  (github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true and contains(github.event.pull_request.base.ref, 'refs/heads/opshotfix/')) 
     runs-on: ubuntu-latest
     needs: [codeql_autobuild_check, build_artifact_for_main]
     steps:
     - name: chckout code from hotfix
-      if: startsWith(github.ref, 'refs/heads/opshotfix1/'))
+      #if: startsWith(github.ref, 'refs/heads/opshotfix1/'))
       uses: actions/checkout@v2
       with:
         ref: "refs/heads/opshotfix1"
         fetch-depth: '0'
 
     - name: extract branch name
-      if: startsWith(github.ref, 'refs/heads/opshotfix/'))
+      #if: startsWith(github.ref, 'refs/heads/opshotfix/'))
       run: echo "::set-env name=HOTFIX_BRANCH::$(echo ${GITHUB_REF#refs/heads/opshotfix1/})"
 
     - name: Setup github cli
