@@ -241,24 +241,22 @@ jobs:
     - name: Extract branch name
       shell: bash
       run: |
-         echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
          echo "::set-output name=branch_name::${GITHUB_REF#refs/heads/}"
-         echo $branch
-         echo $branch_name
-         echo $GITHUB_OUTPUT
-         cat $GITHUB_OUTPUT
+         echo "${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+         #echo "::set-output name=branch_name::${GITHUB_REF#refs/heads/}"
+         #echo $branch
+         #echo $branch_name
+         #echo $GITHUB_OUTPUT
+         #cat $GITHUB_OUTPUT
       id: extract_branch
-
-    - name: Checkout external repository with script
-      uses: actions/checkout@v2  
       
     - name: raise PR
+      run: |
+         gh pr create --base opsdevelopment --head ${{ steps.extract_branch.outputs.branch_name }} --title "auto pr from opshotfix to opsdevelopment" --body "This is auto pr from opshotfix to opsdevelopment"
       env:
         GH_TOKEN: ${{ github.token }}
         token: ${{ secrets.PAT }}
-        GITHUB_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}
-      run: |
-         gh pr create --base opsdevelopment --head ${{ steps.extract_branch.outputs.branch }} --title "auto pr from opshotfix to opsdevelopment" --body "This is auto pr from opshotfix to opsdevelopment"
+        GITHUB_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}   
         
       
 
