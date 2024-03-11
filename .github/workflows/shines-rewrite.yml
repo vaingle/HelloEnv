@@ -234,10 +234,10 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}
 
     - name: chckout code from hotfix
-      if : (github.ref_type == 'branch' && startsWith(github.ref, 'refs/heads/opshotfix/'))
+      #if : (github.ref_type == 'branch' && startsWith(github.ref, 'refs/heads/opshotfix/'))
       uses: actions/checkout@v2
       with:
-        ref: ${{ github.ref }}
+        ref: "refs/heads/opshotfix/"
         fetch-depth: '0'
 
     - name: Setup github cli
