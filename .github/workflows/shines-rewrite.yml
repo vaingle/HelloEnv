@@ -209,15 +209,6 @@ jobs:
         cache-dependency-path: 'pom.xml'
         server-id: github
         settings-path: ${{ github.workspace }}
-    - name: Extract branch name
-      shell: bash
-      run: |
-         echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
-         echo "::set-output name=branch_name::${GITHUB_REF#refs/heads/}}"
-         echo $branch
-         echo $GITHUB_OUTPUT
-         cat $GITHUB_OUTPUT
-      id: extract_branch
       
     #- name: print head branch name
     #  run: echo hotfix branch name: $"{{ env.HEAD_BRANCH_NAME }}"
@@ -247,6 +238,17 @@ jobs:
         GITHUB_ACTOR: ${{ github.actor }}
         GITHUB_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}
 
+    - name: Extract branch name
+      shell: bash
+      run: |
+         echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+         echo "::set-output name=branch_name::${GITHUB_REF#refs/heads/}"
+         echo $branch
+         echo $branch_name
+         echo $GITHUB_OUTPUT
+         cat $GITHUB_OUTPUT
+      id: extract_branch
+      
     - name: raise PR
       env:
         GH_TOKEN: ${{ github.token }}
