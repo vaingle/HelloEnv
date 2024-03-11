@@ -232,6 +232,23 @@ jobs:
       env:
         GITHUB_ACTOR: ${{ github.actor }}
         GITHUB_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}
+
+    - name: chckout code from hotfix
+      uses: actions/checkout@v2
+      with:
+        ref: 'refs/heads/hotfix*'
+        fetch-depth: '0'
+
+    - name: Setup github cli
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+         
+    - name: Raise PR
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+         gh pr create --base opsdevelopment --head ${{ github.ref }} --title "auto pr from opshotfix to main" --body "This is auto pr from opshotfix to main"
   
   create_pr_hotfix_dev:
     runs-on: ubuntu-latest
