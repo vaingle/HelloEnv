@@ -1,9 +1,9 @@
 name: "Build Shines Frontend WAR"
 run-name: Build initiated by ${{ github.actor }}
 on:
-  # push:
-  #   branches:
-  #     - 'opsdevelopment'
+  push:
+    branches:
+      - 'opshotfix/**'
   create:
     branches:
       - 'opsrelease/**'
