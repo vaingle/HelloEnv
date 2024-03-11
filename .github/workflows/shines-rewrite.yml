@@ -241,7 +241,7 @@ jobs:
     needs: [codeql_autobuild_check] #, build_artifact_for_main]
     steps:
     - name: chckout code from hotfix
-      if: startsWith(github.ref, 'refs/heads/opshotfix1/'))
+      if: startsWith(github.ref, 'refs/heads/opshotfix1/')
       uses: actions/checkout@v2
       with:
         ref: "${github.ref}"
