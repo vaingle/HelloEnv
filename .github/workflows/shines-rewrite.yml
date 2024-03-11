@@ -253,6 +253,7 @@ jobs:
       env:
         GH_TOKEN: ${{ github.token }}
         token: ${{ secrets.PAT }}
+        GITHUB_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}
       run: |
          gh pr create --base opsdevelopment --head ${{ steps.extract_branch.outputs.branch }} --title "auto pr from opshotfix to main" --body "This is auto pr from opshotfix to main"
         
