@@ -236,7 +236,7 @@ jobs:
     - name: chckout code from hotfix
       uses: actions/checkout@v2
       with:
-        ref: 'refs/heads/hotfix*'
+        ref: ${{ github.ref }}
         fetch-depth: '0'
 
     - name: Setup github cli
