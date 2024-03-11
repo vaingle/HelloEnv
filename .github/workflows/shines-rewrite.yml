@@ -248,7 +248,7 @@ jobs:
 
     - name: extract branch name
       if: startsWith(github.ref, 'refs/heads/opshotfix/'))
-      run: echo "::set-env name="HOTFIX_BRANCH::$(echo ${GITHUB_REF#refs/heads/hotfix/})"
+      run: echo "::set-env name=HOTFIX_BRANCH::$(echo ${GITHUB_REF#refs/heads/hotfix/})"
 
     - name: Setup github cli
       uses: actions/setup-node@v2
