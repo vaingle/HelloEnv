@@ -213,6 +213,7 @@ jobs:
       shell: bash
       run: |
          echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+         echo "::set-output name=branch_name::${GITHUB_REF#refs/heads/}}"
          echo $branch
          echo $GITHUB_OUTPUT
          cat $GITHUB_OUTPUT
@@ -250,7 +251,7 @@ jobs:
       env:
         GH_TOKEN: ${{ github.token }}
       run: |
-         gh pr create --base opsdevelopment --head steps.extract_branch.outputs.stdout --title "auto pr from opshotfix to main" --body "This is auto pr from opshotfix to main"
+         gh pr create --base opsdevelopment --head ${{ steps.extract_branch.outputs.branch_name }} --title "auto pr from opshotfix to main" --body "This is auto pr from opshotfix to main"
         
       
 
