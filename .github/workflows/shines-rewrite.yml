@@ -185,7 +185,8 @@ jobs:
       contents: write
       security-events: write
     if: >
-        github.event_name == 'pull_request' && github.event.action == 'closed' && startsWith(github.event.pull_request.base.ref, 'refs/heads/opshotfix*')       
+        github.event.pull_request.merged == true && github.base_ref == 'main'
+             
     runs-on: ubuntu-latest
     #needs: [codeql_autobuild_check]
     steps:
@@ -253,6 +254,15 @@ jobs:
          #echo $GITHUB_OUTPUT
          #cat $GITHUB_OUTPUT
       id: extract_branch 
+
+    - name: chckout branch hotfix
+      with:
+        #repository: 'vaingle/mvn-version-bumper'
+        ref: refs/heads/${{ steps.extract_branch.outputs.branch }}
+        #ssh-key: ${{ secrets.DEVOPS_PULL_PRIVATE_KEY }}
+        token: ${{ secrets.PAT }}
+        #path: 'SHINES-main-rewrite/shines-devops'
+        path: ${{ github.workspace }}/${{ steps.extract_branch.outputs.branch }}
       
     - name: raise PR
       run: |
