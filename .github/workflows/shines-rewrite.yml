@@ -256,6 +256,7 @@ jobs:
       id: extract_branch 
 
     - name: chckout branch hotfix
+      uses: actions/checkout@v4
       with:
         #repository: 'vaingle/mvn-version-bumper'
         ref: refs/heads/${{ steps.extract_branch.outputs.branch }}
