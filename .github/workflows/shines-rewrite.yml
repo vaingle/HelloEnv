@@ -286,7 +286,6 @@ jobs:
          gh auth login --with-token <<< ${{ env.TOKEN }}
          gh pr create --base opsdevelopment --head "${{ steps.extract_branch.outputs.branch }}" --title "auto pr from opshotfix to opsdevelopment" --body "This is auto pr from opshotfix to opsdevelopment"  
       env:
-        GH_TOKEN: ${{ github.token }}
         TOKEN: ${{ secrets.PAT1 }}
         GITHUB_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}   
         
