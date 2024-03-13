@@ -282,15 +282,11 @@ jobs:
         path: ${{ github.workspace }}/${{ steps.extract_branch.outputs.branch }}
       
     - name: raise PR
-      run: |
-         gh auth login --with-token <<< ${{ env.TOKEN }}
-         gh pr create --base opsdevelopment --head "${{ steps.extract_branch.outputs.branch }}" --title "auto pr from opshotfix to opsdevelopment" --body "This is auto pr from opshotfix to opsdevelopment"  
       env:
-        TOKEN: ${{ secrets.PAT1 }}
-        GITHUB_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}   
+        GH_TOKEN: ${{ github.token }}
+      run: |
+         gh pr create --base opsdevelopment --head "${{ steps.extract_branch.outputs.branch }}" --title "auto pr from opshotfix to opsdevelopment" --body "This is auto pr from opshotfix to opsdevelopment"    
         
-      
-
   create_pr_opshotfix_opsdevelopment:
     #if: >
     # (github.ref_type == 'branch' && startsWith(github.ref, 'refs/heads/opshotfix1/'))
