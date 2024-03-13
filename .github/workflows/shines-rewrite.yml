@@ -217,7 +217,7 @@ jobs:
         repository: 'vaingle/mvn-version-bumper'
         ref: 'refs/heads/main'
         #ssh-key: ${{ secrets.DEVOPS_PULL_PRIVATE_KEY }}
-        token: ${{ secrets.PAT }}
+        token: ${{ secrets.PAT1 }}
         #path: 'SHINES-main-rewrite/shines-devops'
         path: mvn-version-bumper
     - name: Setup Java 17 and Maven
