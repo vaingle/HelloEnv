@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.uthinkurbetterthanme</groupId>
     <artifactId>helloenv</artifactId>
-    <version>v2.0.53</version>
+    <version>v2.0.54</version>
     <packaging>jar</packaging>
 
     <properties>
