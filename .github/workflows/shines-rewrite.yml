@@ -283,7 +283,8 @@ jobs:
       
     - name: raise PR
       run: |
-         gh pr create --base opsdevelopment --head "${{ steps.extract_branch.outputs.branch }}" --title "auto pr from opshotfix to opsdevelopment" --body "This is auto pr from opshotfix to opsdevelopment" --token "${{ env.TOKEN}}" 
+         gh auth login --with-token <<< ${{ env.TOKEN }}
+         gh pr create --base opsdevelopment --head "${{ steps.extract_branch.outputs.branch }}" --title "auto pr from opshotfix to opsdevelopment" --body "This is auto pr from opshotfix to opsdevelopment"  
       env:
         GH_TOKEN: ${{ github.token }}
         TOKEN: ${{ secrets.PAT1 }}
