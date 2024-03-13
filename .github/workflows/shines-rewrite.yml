@@ -268,3 +268,33 @@ jobs:
       env:
         GITHUB_ACTOR: ${{ github.actor }}
         GITHUB_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}
+
+    - name: Extract branch name
+      shell: bash
+      run: |
+         echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+         echo "::set-output name=branch_name::${GITHUB_REF#refs/heads/}"
+         echo $branch
+         echo $branch_name
+         #echo $branch_name
+         #echo $GITHUB_OUTPUT
+         #cat $GITHUB_OUTPUT
+      id: extract_branch1 
+
+    - name: chckout branch hotfix
+      uses: actions/checkout@v4
+      with:
+        #repository: 'vaingle/mvn-version-bumper'
+        ref: refs/heads/${{ steps.extract_branch.outputs.branch }}
+        #ssh-key: ${{ secrets.DEVOPS_PULL_PRIVATE_KEY }}
+        token: ${{ secrets.PAT }}
+        #path: 'SHINES-main-rewrite/shines-devops'
+        path: ${{ github.workspace }}/${{ steps.extract_branch1.outputs.branch }}
+      
+    - name: raise PR
+      run: |
+         gh pr create --base opsdevelopment --head refs/heads/${{ steps.extract_branch1.outputs.branch }} --title "auto pr from opsrelease to opsdevelopment" --body "This is auto pr from opshrelease to opsdevelopment"
+      env:
+        GH_TOKEN: ${{ github.token }}
+        token: ${{ secrets.PAT }}
+        GITHUB_TOKEN: ${{ secrets.REPOSITORY_TOKEN }} 
