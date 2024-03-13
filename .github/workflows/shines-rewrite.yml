@@ -285,7 +285,7 @@ jobs:
       uses: actions/checkout@v4
       with:
         #repository: 'vaingle/mvn-version-bumper'
-        ref: refs/heads/${{ steps.extract_branch.outputs.branch }}
+        ref: refs/heads/${{ steps.extract_branch1.outputs.branch }}
         #ssh-key: ${{ secrets.DEVOPS_PULL_PRIVATE_KEY }}
         token: ${{ secrets.PAT }}
         #path: 'SHINES-main-rewrite/shines-devops'
