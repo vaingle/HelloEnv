@@ -296,6 +296,6 @@ jobs:
       run: |
          gh pr create --base opsdevelopment --head refs/heads/${{ steps.extract_branch1.outputs.branch }} --title "auto pr from opsrelease to opsdevelopment" --body "This is auto pr from opshrelease to opsdevelopment"
       env:
-        GH_TOKEN: ${{ github.token }}
+        GH_TOKEN: ${{ github.TOKEN }}
         token: ${{ secrets.PAT }}
         GITHUB_TOKEN: ${{ secrets.REPOSITORY_TOKEN }} 
