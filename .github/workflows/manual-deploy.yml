@@ -1,0 +1,36 @@
+name: Manual WAR Deployment
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Select the Environment'
+        type: environment
+      version:
+        description: 'WAR Version to Deploy'
+        required: true
+        type: string
+
+jobs:
+    deploy:
+        runs-on: [self_hosted, "${{ github.event.inputs.environment }}"]
+        steps:
+        - name: Write secrets to file
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            TEST_SECRET_VALUE: ${{ secrets.TEST_SECRET_VALUE }}
+          run: |
+            echo "export SECRET_NAME=${TEST_SECRET_VALUE}" > /tmp/set_env.sh
+            # echo "$TEST_SECRET_VALUE" >> /tmp/set_env.sh
+        - name: Create staging build folder if not exists
+          run: |
+            if [ ! -d "/tmp/shines-rewrite/builds" ]; then
+              mkdir -p /tmp/shines-rewrite/builds
+            fi
+        - name: Pull WAR from Github Packages
+          run: |
+            wget -d --header="Authorization: token {GITHUB_TOKEN}" \
+             https://maven.pkg.github.com/gadhs-shines/shines-rewrite/gov.georgia/shines-main-rewrite/${{ github.event.inputs.version }}/shines-main-rewrite-${{ github.event.inputs.version }}.war
+          working-directory: SHINES-main-rewrite/
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
