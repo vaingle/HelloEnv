@@ -1,0 +1,47 @@
+name: Deploy WAR File
+
+on:
+  workflow_dispatch: # Trigger manually
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    outputs:
+      selected_version: ${{ steps.list_versions.outputs.selected_version }}
+    
+    steps:
+      - name: List available versions
+        id: list_versions
+        run: |
+          available_versions=$(mvn org.apache.maven.plugins:maven-metadata-plugin:3.6.0:resolve-plugins -Dplugin=com.github.ars-maven-dependency:ars-maven-dependency-plugin:2.1.1:versions -q -Dartifact=com.example:myapp:war -DrepoUrl=https://maven.pkg.github.com/OWNER/REPO -DoutputDir=.)
+          # Parse available versions from the output (may require additional parsing based on the output format)
+          available_versions_array=($(echo "$available_versions" | grep -oP '(?<=<version>)[^<]+' | sort -V))
+          # Output available versions as JSON array
+          echo "::set-output name=available_versions::$(echo "${available_versions_array[@]}" | jq -R . | jq -s .)"
+
+      - name: Display available versions and select one
+        id: select_version
+        run: |
+          echo "Available versions:"
+          echo "${{ steps.list_versions.outputs.available_versions }}"
+          # Provide available versions as input options
+          echo "::set-output name=selected_version::$(echo "${{ steps.list_versions.outputs.available_versions }}" | jq -r '.[]' | fzf)"
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+      
+      - name: Fetch WAR file from GitHub Packages
+        run: |
+          mvn org.apache.maven.plugins:maven-dependency-plugin:3.1.2:get -DgroupId=com.example -DartifactId=myapp -Dversion=${{ steps.select_version.outputs.selected_version }} -Dpackaging=war -DremoteRepositories=https://maven.pkg.github.com/OWNER/REPO -Ddest=target/myapp.war
+        env:
+          GITHUB_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}
+      
+      - name: Deploy WAR file
+        run: |
+          # Add your deployment logic here
+          # For example, deploy the WAR file to a server
