@@ -12,6 +12,10 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+        with:
+          ref: main
       - name: Create Environment
         run: |
           # Your Python script to create environments dynamically
