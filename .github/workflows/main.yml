@@ -1,0 +1,18 @@
+name: Create Environments
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment name (e.g., dev, test, qa, prod)'
+        required: true
+
+jobs:
+  create_environment:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Create Environment
+        run: |
+          # Your Python script to create environments dynamically
+          python create_environment.py ${{ github.event.inputs.environment }}
