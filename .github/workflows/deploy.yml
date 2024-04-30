@@ -8,7 +8,8 @@ on:
         default: "dev"
         required: true
         type: string
-
+env:
+  environment: dev
 jobs:
   example:
     name: Example Job
