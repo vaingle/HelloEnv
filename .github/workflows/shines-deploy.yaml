@@ -1,0 +1,19 @@
+name: TEST2 Workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: "Name for the env"
+        default: "dev"
+        required: true
+        type: environment
+env:
+  environment: dev
+jobs:
+  example:
+    name: Example Job !!
+    runs-on: ubuntu-latest
+    steps:
+      - name: Display Name
+        run: echo "Workflow name is ${{ github.event.inputs.name }}"
