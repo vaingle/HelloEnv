@@ -1,4 +1,4 @@
-name: TEST Workflow
+name: TEST2 Workflow
 
 on:
   workflow_dispatch:
