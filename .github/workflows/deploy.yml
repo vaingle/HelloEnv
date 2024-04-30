@@ -46,6 +46,6 @@ jobs:
         with:
           secrets: ${{ toJSON(secrets) }}
           variables: ${{ toJSON(vars) }}
-          TEST:  ${{ secrets.TEST }}
+          ENV_TEST:  ${{ secrets.TEST }}
 
  
