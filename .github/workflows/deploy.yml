@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
     inputs:
       name:
-        description: "Name for the workflow"
+        description: "Name for the env"
         default: "dev"
         required: true
-        type: string
+        type: environment
 env:
   environment: dev
 jobs:
