@@ -28,4 +28,10 @@ jobs:
           echo $secrets | jq -r 'keys[] as $k | "echo \"\($k)=\(.[$k] )\" >> $GITHUB_ENV"' > .env.production
           cat .env.production
         shell: bash
+
+      - name: use another   
+        uses: oNaiPs/secrets-to-env-action@v1
+        with:
+          secrets: ${{ toJSON(secrets) }}
+          variables: ${{ toJSON(vars) }}
  
