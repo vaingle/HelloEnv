@@ -12,7 +12,7 @@ env:
   environment: dev
 jobs:
   example:
-    name: Example Job
+    name: Example Job !!
     runs-on: ubuntu-latest
     steps:
       - name: Display Name
