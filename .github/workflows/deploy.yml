@@ -16,3 +16,6 @@ jobs:
     steps:
       - name: Display Name
         run: echo "Workflow name is ${{ github.event.inputs.name }}"
+      - uses: infovista-opensource/vars-to-env-action@v1
+        with:
+          secrets: ${{ toJSON(secrets) }}
