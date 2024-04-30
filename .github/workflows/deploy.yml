@@ -25,7 +25,7 @@ jobs:
         env:
           secrets: ${{ toJSON(secrets) }}
         run: |
-          echo $secrets | base64 -d >> .env.production
+          echo ${{ secrets.PAT }} | base64 -d >> .env.production
           cat .env.production
         shell: bash
  
